@@ -7,6 +7,9 @@ export function isIndexFile(file: TAbstractFile) {
 function parentPrefix(file: TFile) {
 	return folderPrefix(file.parent!);
 }
+export function getParentPath(p: string) {
+	return p === "/" ? undefined : p.split("/").slice(0, -1).join("/") || "/";
+}
 export function isIndexPath(path: string) {
 	// always non null, because actual signature should be [string, ...string[]]
 	const basename = path.split("/").at(-1)!;
