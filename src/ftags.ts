@@ -100,7 +100,12 @@ function findUnoccupiedRenamePath(
 	}
 	throw new Error("Failed to find new name for file!");
 }
-export async function removeFtag(ftag: TFile, source: TFile, app: App) {
+export async function removeFtag(
+	ftag: TFile,
+	source: TFile,
+	app: App,
+	inbox?: TFolder,
+) {
 	const movable = movableFile(source);
 	if (ftag.parent === movable.parent && isIndexFile(ftag)) {
 		let otherParent = [
@@ -120,9 +125,7 @@ export async function removeFtag(ftag: TFile, source: TFile, app: App) {
 					) &&
 					(!isIndexFile(v.file) || v.file.parent !== movable.parent),
 			)?.file;
-		if (!otherParent)
-			otherParent =
-				app.vault.getFolderByPath("Uncategorized") ?? undefined;
+		if (!otherParent) otherParent = inbox ?? undefined;
 		if (!otherParent) return;
 		const dir = await forceFolder(otherParent, app);
 		await app.fileManager.renameFile(
