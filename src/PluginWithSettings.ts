@@ -73,5 +73,16 @@ export default function PluginWithSettings<S extends object>(
 		override unload(): void {
 			this.uninstallPatches();
 		}
+
+		protected getCheckCallbackWithValue<T>(
+			valueGetter: () => T | null | undefined,
+			cb: (this: this, value: T) => unknown,
+		): (checking: boolean) => boolean {
+			return (checking) => {
+				const value = valueGetter();
+				if (value && !checking) cb.apply(this, [value]);
+				return !!value;
+			};
+		}
 	};
 }
