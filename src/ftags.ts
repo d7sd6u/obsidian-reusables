@@ -126,7 +126,7 @@ export async function removeFtag(ftag: TFile, source: TFile, app: App) {
 				app.vault.getFolderByPath("Uncategorized") ?? undefined;
 		if (!otherParent) return;
 		const dir = await forceFolder(otherParent, app);
-		await app.vault.rename(
+		await app.fileManager.renameFile(
 			movable,
 			findUnoccupiedRenamePath(movable, dir.folder.path, app),
 		);
