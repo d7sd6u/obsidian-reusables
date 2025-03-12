@@ -45,7 +45,6 @@ export const getFileIsTargetFileTagFilter = (
 	return (file) => {
 		const isDirectParent = isIndexFile(file) && file.parent === trueParent;
 		if (isDirectParent) return true;
-		console.log();
 		const links = app.metadataCache.getCache(file.path)?.frontmatterLinks;
 		return !!links?.some(
 			(l) =>
